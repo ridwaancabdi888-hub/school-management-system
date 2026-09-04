@@ -1,0 +1,26 @@
+{
+  "name": "school-management-system",
+  "version": "1.0.0",
+  "description": "Multi-tenant School Management System (Platform Super Admin + per-school Admin/Teacher/Student/Parent/Accountant/Staff portals)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:setup": "node database/postgres/setup.js",
+    "db:setup:mysql-legacy": "node database/setup.js"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pdfkit": "^0.15.0",
+    "pg": "^8.13.0",
+    "xlsx": "^0.18.5"
+  }
+}
