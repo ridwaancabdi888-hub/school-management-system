@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+.vercel/
+uploads/logos/*
+uploads/photos/*
+uploads/imports/*
+uploads/gallery/*
+!uploads/logos/.gitkeep
+!uploads/photos/.gitkeep
+!uploads/imports/.gitkeep
+!uploads/gallery/.gitkeep
+*.log
+.DS_Store
