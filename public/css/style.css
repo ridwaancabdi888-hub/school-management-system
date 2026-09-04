@@ -1,0 +1,196 @@
+/* ---------------------------------------------------------------------
+   School Management System — shared design system
+   Mobile-first. Works down to ~320px and up to large desktop monitors.
+--------------------------------------------------------------------- */
+:root{
+  --brand:#2563eb;
+  --brand-dark:#1d4ed8;
+  --bg:#f4f6fb;
+  --surface:#ffffff;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --text-muted:#64748b;
+  --success:#16a34a;
+  --success-bg:#dcfce7;
+  --danger:#dc2626;
+  --danger-bg:#fee2e2;
+  --warning:#d97706;
+  --warning-bg:#fef3c7;
+  --info-bg:#dbeafe;
+  --radius:10px;
+  --shadow:0 1px 3px rgba(15,23,42,.08), 0 1px 2px rgba(15,23,42,.06);
+  --sidebar-w:230px;
+  --header-h:56px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.5;
+}
+img{max-width:100%}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0 0 .5em;line-height:1.25}
+p{margin:0 0 1em}
+button{font-family:inherit}
+
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 16px;border-radius:8px;border:1px solid transparent;
+  font-size:14px;font-weight:600;cursor:pointer;background:var(--brand);color:#fff;
+  transition:background .15s ease;white-space:nowrap;
+}
+.btn:hover{background:var(--brand-dark);text-decoration:none}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.secondary{background:#fff;color:var(--text);border-color:var(--border)}
+.btn.secondary:hover{background:#f1f5f9}
+.btn.danger{background:var(--danger)}
+.btn.danger:hover{background:#b91c1c}
+.btn.success{background:var(--success)}
+.btn.ghost{background:transparent;color:var(--brand);padding:6px 8px}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* ---------- Forms ---------- */
+label{display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--text-muted)}
+input,select,textarea{
+  width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:8px;
+  font-size:14px;background:#fff;color:var(--text);font-family:inherit;
+}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:-1px}
+.field{margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.checkbox-row{display:flex;align-items:center;gap:8px}
+.checkbox-row input{width:auto}
+small.hint{display:block;color:var(--text-muted);margin-top:4px;font-size:12px}
+
+/* ---------- Layout: app shell ---------- */
+.app-shell{display:flex;min-height:100vh}
+.sidebar{
+  width:var(--sidebar-w);background:#111827;color:#e5e7eb;flex-shrink:0;
+  display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;
+  transform:translateX(0);transition:transform .2s ease;z-index:40;
+}
+.sidebar .brand{padding:18px 16px;font-weight:700;font-size:16px;border-bottom:1px solid #1f2937;display:flex;align-items:center;gap:8px}
+.sidebar .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--brand)}
+.sidebar nav{flex:1;overflow-y:auto;padding:10px}
+.sidebar a{
+  display:flex;align-items:center;gap:10px;color:#cbd5e1;padding:10px 12px;border-radius:8px;
+  font-size:13.5px;font-weight:500;margin-bottom:2px;
+}
+.sidebar a:hover{background:#1f2937;text-decoration:none;color:#fff}
+.sidebar a.active{background:var(--brand);color:#fff}
+.sidebar .foot{padding:12px;border-top:1px solid #1f2937;font-size:12px;color:#94a3b8}
+
+.main{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-width:0}
+.topbar{
+  height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:30;
+}
+.topbar .title{font-weight:700;font-size:16px}
+.topbar .user{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.topbar .user .avatar{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.menu-toggle{display:none;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text)}
+.content{padding:20px;flex:1}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:35}
+
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .menu-toggle{display:block}
+  .sidebar-backdrop.open{display:block}
+}
+
+/* ---------- Cards / stats ---------- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.card h3{font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.stat-card .label{font-size:12.5px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+.stat-card .value{font-size:26px;font-weight:800;margin-top:4px}
+.stat-card .sub{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+
+.section-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.section-header h2{margin:0;font-size:20px}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.toolbar input,.toolbar select{width:auto;min-width:140px}
+
+/* ---------- Table ---------- */
+.table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+thead th{
+  text-align:left;padding:11px 14px;background:#f8fafc;color:var(--text-muted);
+  font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.03em;
+  border-bottom:1px solid var(--border);white-space:nowrap;
+}
+tbody td{padding:11px 14px;border-bottom:1px solid #eef2f7;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f8fafc}
+.empty-row td{text-align:center;color:var(--text-muted);padding:28px}
+
+/* ---------- Badges ---------- */
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:700;text-transform:capitalize}
+.badge.active,.badge.present,.badge.published,.badge.paid{background:var(--success-bg);color:var(--success)}
+.badge.inactive,.badge.suspended,.badge.absent,.badge.rejected{background:var(--danger-bg);color:var(--danger)}
+.badge.draft,.badge.late,.badge.pending,.badge.new{background:var(--warning-bg);color:var(--warning)}
+.badge.info,.badge.excused{background:var(--info-bg);color:var(--brand-dark)}
+
+/* ---------- Modal ---------- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.5);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal{background:#fff;border-radius:var(--radius);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:22px;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.modal.wide{max-width:820px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-header h3{margin:0}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-muted);line-height:1}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:16px;flex-wrap:wrap}
+.tabs button{background:none;border:none;padding:10px 14px;font-size:13.5px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent}
+.tabs button.active{color:var(--brand);border-bottom-color:var(--brand)}
+
+/* ---------- Toast ---------- */
+#toast-region{position:fixed;bottom:18px;right:18px;z-index:200;display:flex;flex-direction:column;gap:8px;max-width:320px}
+.toast{padding:12px 16px;border-radius:8px;background:#111827;color:#fff;font-size:13.5px;box-shadow:0 8px 20px rgba(0,0,0,.25);animation:toast-in .15s ease}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+@keyframes toast-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- Login page ---------- */
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e293b,#0f172a);padding:20px}
+.login-card{background:#fff;border-radius:14px;padding:32px;width:100%;max-width:380px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.login-card .logo{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-weight:800;font-size:19px}
+.login-card .logo .dot{width:12px;height:12px;border-radius:50%;background:var(--brand)}
+.login-card p.tag{color:var(--text-muted);margin-bottom:22px;font-size:13.5px}
+.error-box{background:var(--danger-bg);color:var(--danger);padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:14px}
+.demo-accounts{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)}
+.demo-accounts a{cursor:pointer}
+
+/* ---------- Utility ---------- */
+.text-muted{color:var(--text-muted)}
+.text-danger{color:var(--danger)}
+.text-success{color:var(--success)}
+.mt-0{margin-top:0}.mb-0{margin-bottom:0}
+.flex{display:flex}.items-center{align-items:center}.gap-8{gap:8px}.gap-14{gap:14px}
+.spacer{flex:1}
+.hidden{display:none!important}
+.loading{padding:30px;text-align:center;color:var(--text-muted)}
+.pill-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pill-tabs button{border:1px solid var(--border);background:#fff;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--text-muted)}
+.pill-tabs button.active{background:var(--brand);border-color:var(--brand);color:#fff}
+.avatar-photo{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#e2e8f0}
+.progress{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+.progress > div{height:100%;background:var(--brand)}
+.two-col{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+@media (max-width:900px){.two-col{grid-template-columns:1fr}}
+.pagination{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:12px;font-size:13px}

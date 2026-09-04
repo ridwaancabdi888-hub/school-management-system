@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — School Management System</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-page">
+  <div class="login-card">
+    <div class="logo"><span class="dot"></span> School Management System</div>
+    <p class="tag">Multi-tenant platform — sign in with the account issued to you.</p>
+    <div id="error-box" class="error-box hidden"></div>
+    <form id="login-form">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn" type="submit" style="width:100%">Sign In</button>
+    </form>
+    <div class="demo-accounts">
+      <strong>Demo accounts</strong> (see docs/USER_GUIDE.md for the full list):
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+        <a data-u="superadmin" data-p="SuperAdmin@123">Platform Super Admin — superadmin</a>
+        <a data-u="admin.suna" data-p="SunA-Admin@123">School Admin (Sunrise Academy) — admin.suna</a>
+        <a data-u="admin.bfs" data-p="BFS-Admin@123">School Admin (Bright Future School) — admin.bfs</a>
+        <a data-u="teacher1.suna" data-p="Teacher@123">Teacher (Sunrise Academy) — teacher1.suna</a>
+        <a data-u="accountant.suna" data-p="Accountant@123">Accountant (Sunrise Academy) — accountant.suna</a>
+      </div>
+    </div>
+  </div>
+  <script src="/js/api.js"></script>
+  <script>
+    document.querySelectorAll('.demo-accounts a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('username').value = a.dataset.u;
+        document.getElementById('password').value = a.dataset.p;
+      });
+    });
+
+    // If already logged in, skip straight to the right portal.
+    api('/auth/me').then(({ user }) => { window.location.href = roleHome(user.role); }).catch(() => {});
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorBox = document.getElementById('error-box');
+      errorBox.classList.add('hidden');
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      try {
+        const { user } = await api('/auth/login', { method: 'POST', body: { username, password } });
+        window.location.href = roleHome(user.role);
+      } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
