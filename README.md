@@ -141,9 +141,18 @@ isolation test result" below for how this was verified.
 
 ### 1. Configure environment
 
+**macOS, Linux, or Git Bash:**
+
 ```bash
 cd school-management-system
 cp .env.example .env
+```
+
+**Windows PowerShell:**
+
+```powershell
+cd school-management-system
+Copy-Item .env.example .env
 ```
 
 Fill in `DATABASE_URL`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY`
