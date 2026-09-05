@@ -81,7 +81,7 @@ async function outstanding(req, res) {
      WHERE ${where.join(' AND ')}
      GROUP BY st.id, c.name, sec.name
      HAVING COALESCE(SUM(sf.amount_required), 0) > COALESCE((SELECT SUM(p.amount) FROM payments p WHERE p.student_id = st.id AND p.school_id = st.school_id), 0)
-     ORDER BY (required - paid) DESC`,
+     ORDER BY (COALESCE(SUM(sf.amount_required), 0) - COALESCE((SELECT SUM(p.amount) FROM payments p WHERE p.student_id = st.id AND p.school_id = st.school_id), 0)) DESC`,
     params
   );
   res.json({ students: rows.map(r => ({ ...r, outstanding: Number(r.required) - Number(r.paid) })) });
