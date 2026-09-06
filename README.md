@@ -435,7 +435,7 @@ several things this schema and its queries relied on:
 | `MONTH(x)`, `YEAR(x)` | `EXTRACT(MONTH FROM x)`, `EXTRACT(YEAR FROM x)` | "this month's collections/expenses" dashboard queries |
 | `DATE_FORMAT(x, '%Y-%m')` | `TO_CHAR(x, 'YYYY-MM')` | monthly collections / income-expense summaries |
 | `GROUP BY <table>.id` while selecting other tables' columns | Postgres only infers functional dependency within the *same* table's primary key — joined tables' columns (e.g. class/section name) had to be added to `GROUP BY` explicitly | outstanding-fees report |
-| Alias in `HAVING` | not allowed in Postgres (unlike `ORDER BY`/`GROUP BY`, which do allow it) — the aggregate expression had to be repeated | outstanding-fees report |
+| Aliases in `HAVING` or inside an `ORDER BY` expression | `HAVING` cannot use SELECT aliases; `ORDER BY` can use a bare alias but cannot combine aliases in an expression such as `(required - paid)` — the aggregate expressions had to be repeated | outstanding-fees report |
 | `?` placeholders, `result.insertId`, `[rows, fields]` return shape | Preserved via an adapter in `config/db.js` that rewrites `?` → `$1, $2, ...`, auto-appends `RETURNING id` to `INSERT`s, and shapes the `pg` result back into the same tuple every controller already destructures — so controller call sites didn't need a full rewrite, only the genuine dialect differences above | all 20 controllers |
 | `LIMIT ? OFFSET ?` | unchanged — Postgres uses identical syntax | student list pagination |
 
